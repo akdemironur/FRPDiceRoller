@@ -15,7 +15,6 @@ struct ContentView: View {
     @State var output2 = "20/20"
     func outputCalc() -> String{
         output = ""
-        
         for i in 0..<dices.count {
             if (diceAmounts[i] > 0) {
                 output += String(diceAmounts[i]) + "d" + String(dices[i]) + " + "
@@ -60,37 +59,19 @@ struct ContentView: View {
                     .font(.title2)
                     .multilineTextAlignment(.center)
                 HStack {
-                    Button("d4") {
-                        diceAmounts[0] += 1
-                        output = outputCalc()
-                    }
-                    Button("d6") {
-                        diceAmounts[1] += 1
-                        output = outputCalc()
-                    }
-                    Button("d8") {
-                        diceAmounts[2] += 1
-                        output = outputCalc()
-                    }
-                    Button("d10") {
-                        diceAmounts[3] += 1
-                        output = outputCalc()
+                    ForEach(0..<4, id: \.self) { i in
+                        Button("d"+String(dices[i])) {
+                            diceAmounts[i] += 1
+                            output = outputCalc()
+                        }
                     }
                 }
                 HStack {
-                    Button("d12") {
-                        diceAmounts[4] += 1
-                        output = outputCalc()
-                        
-                    }
-                    Button("d20") {
-                        diceAmounts[5] += 1
-                        output = outputCalc()
-                    }
-                    Button("d100") {
-                        diceAmounts[6] += 1
-                        output = outputCalc()
-                        print(String(diceResult))
+                    ForEach(4..<dices.count, id: \.self) { i in
+                        Button("d"+String(dices[i])) {
+                            diceAmounts[i] += 1
+                            output = outputCalc()
+                        }
                     }
                 }
                 Button("Clear") {
@@ -105,7 +86,6 @@ struct ContentView: View {
         }
         .padding()
     }
-    
 }
 
 struct ContentView_Previews: PreviewProvider {
